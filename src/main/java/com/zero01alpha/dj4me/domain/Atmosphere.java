@@ -15,6 +15,7 @@ public class Atmosphere {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)

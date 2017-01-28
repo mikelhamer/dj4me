@@ -4,6 +4,7 @@ import com.zero01alpha.dj4me.domain.Atmosphere;
 import com.zero01alpha.dj4me.domain.AtmosphereRepository;
 import com.zero01alpha.dj4me.domain.Mood;
 import com.zero01alpha.dj4me.domain.MoodRepository;
+import com.zero01alpha.dj4me.tasks.ImageTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 @SpringBootApplication
@@ -24,7 +27,7 @@ public class Dj4meApplication {
     }
 
     @Bean
-    public CommandLineRunner runner(MoodRepository moodRepo, AtmosphereRepository atmosphereRepo) {
+    public CommandLineRunner createTestData(MoodRepository moodRepo, AtmosphereRepository atmosphereRepo) {
         return (args) -> {
 
             Mood happy = moodRepo.save(new Mood("Happy"));
@@ -57,6 +60,14 @@ public class Dj4meApplication {
                 log.info(atmosphere.toString());
             }
 
+        };
+    }
+
+    @Bean
+    public CommandLineRunner imageTask() {
+        return args -> {
+            Timer timer = new Timer();
+            timer.schedule(new ImageTask(), 0, 1000);
         };
     }
 
