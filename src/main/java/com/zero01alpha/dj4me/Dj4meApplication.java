@@ -1,5 +1,7 @@
 package com.zero01alpha.dj4me;
 
+import com.zero01alpha.dj4me.domain.Atmosphere;
+import com.zero01alpha.dj4me.domain.AtmosphereRepository;
 import com.zero01alpha.dj4me.domain.Mood;
 import com.zero01alpha.dj4me.domain.MoodRepository;
 import org.slf4j.Logger;
@@ -9,42 +11,54 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
+
 
 @SpringBootApplication
 public class Dj4meApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(Dj4meApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(Dj4meApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(Dj4meApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Dj4meApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner runner(MoodRepository moodRepo) {
-		return (args) -> {
-				moodRepo.save(new Mood("Happy"));
-				moodRepo.save(new Mood("Sad"));
-				moodRepo.save(new Mood("Angry"));
-				moodRepo.save(new Mood("Neutral"));
+    @Bean
+    public CommandLineRunner runner(MoodRepository moodRepo, AtmosphereRepository atmosphereRepo) {
+        return (args) -> {
 
-				log.info("All moods");
-				for (Mood mood : moodRepo.findAll()) {
-					log.info("Found " + mood);
-				}
-				log.info("-------------");
-				log.info("Find one mood by id");
-				Mood mood = moodRepo.findOne(1L);
-				log.info("found " + mood);
-				log.info("-------------");
+            Mood happy = moodRepo.save(new Mood("Happy"));
+            Mood sad = moodRepo.save(new Mood("Sad"));
+            Mood angry = moodRepo.save(new Mood("Angry"));
+            Mood neutral = moodRepo.save(new Mood("Neutral"));
 
-				log.info("Find log by name: Angry");
-				mood = moodRepo.findByName("Angry").get(0);
-				log.info("Found " + mood);
-				log.info("-------------");
+            atmosphereRepo.save(new Atmosphere("All Smiles",
+                    Arrays.asList(happy)));
+            atmosphereRepo.save(new Atmosphere("Way Sad",
+                    Arrays.asList(sad)));
+            atmosphereRepo.save(new Atmosphere("GRRRR!!!!",
+                    Arrays.asList(angry)));
+            atmosphereRepo.save(new Atmosphere("Meh",
+                    Arrays.asList(neutral)));
+            atmosphereRepo.save(new Atmosphere("Smile Frown",
+                    Arrays.asList(happy, sad)));
+            atmosphereRepo.save(new Atmosphere("Evil Laugh",
+                    Arrays.asList(happy, angry)));
+            atmosphereRepo.save(new Atmosphere("Slight Grin",
+                    Arrays.asList(happy, neutral)));
+            atmosphereRepo.save(new Atmosphere("Manic Depressed",
+                    Arrays.asList(sad, angry)));
+            atmosphereRepo.save(new Atmosphere("Slight Frown",
+                    Arrays.asList(sad, neutral)));
 
-		};
-	}
 
+            log.info("All Atmospheres");
+            for (Atmosphere atmosphere : atmosphereRepo.findAll()) {
+                log.info(atmosphere.toString());
+            }
+
+        };
+    }
 
 
 }

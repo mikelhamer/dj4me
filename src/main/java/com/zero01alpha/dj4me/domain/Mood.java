@@ -15,7 +15,8 @@ public class Mood {
     private Long id;
     private String name;
 
-    Mood() {}
+    Mood() {
+    }
 
     public Mood(String name) {
         this.name = name;
