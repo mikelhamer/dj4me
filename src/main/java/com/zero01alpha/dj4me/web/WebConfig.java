@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by hamerm on 1/28/17.
  */
 @Configuration
-@ComponentScan()
+@ComponentScan
 public class WebConfig {
 
 

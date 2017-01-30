@@ -4,13 +4,13 @@ import com.zero01alpha.dj4me.domain.Atmosphere;
 import com.zero01alpha.dj4me.domain.AtmosphereRepository;
 import com.zero01alpha.dj4me.domain.Mood;
 import com.zero01alpha.dj4me.domain.MoodRepository;
-import com.zero01alpha.dj4me.tasks.ImageTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 import java.util.Timer;
@@ -18,6 +18,7 @@ import java.util.TimerTask;
 
 
 @SpringBootApplication
+@EnableScheduling
 public class Dj4meApplication {
 
     private static final Logger log = LoggerFactory.getLogger(Dj4meApplication.class);
@@ -63,13 +64,13 @@ public class Dj4meApplication {
         };
     }
 
-    @Bean
-    public CommandLineRunner imageTask() {
-        return args -> {
-            Timer timer = new Timer();
-            timer.schedule(new ImageTask(), 0, 1000);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner imageTask() {
+//        return args -> {
+//            Timer timer = new Timer();
+//            timer.schedule(new ImageTask(), 0, 1000);
+//        };
+//    }
 
 
 }
