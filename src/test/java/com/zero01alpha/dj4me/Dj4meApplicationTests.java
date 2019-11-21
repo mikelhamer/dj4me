@@ -11,7 +11,7 @@ public class Dj4meApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		return;
+
 	}
 
 }
